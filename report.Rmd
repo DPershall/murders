@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This is a quick report on 2010 gun murder rates obtained from FBI reports. The original data was obtained from [this Wikipedia page](https://en.wikipedia.org/wiki/Murder_in_the_United_States_by_state).
 
-I am using the following libraries: tidyverse, ggplot, ggrepel, ggthemes, & dplyr.
+I am using the following R libraries: tidyverse, ggplot, ggrepel, ggthemes, & dplyr.
 
 ```{r loading-libs, message=FALSE, echo=FALSE}
 library(tidyverse)
@@ -23,7 +23,7 @@ library(dplyr)
 library(ggplot2)
 ```
 
-Load the data that has already been wrangled from rda/murders.rda
+Load the wrangled data from rda/murders.rda
 
 ```{r, echo=FALSE}
 load("rda/murders.rda")
