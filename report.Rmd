@@ -1,0 +1,71 @@
+---
+title: "Report on Gun Murders"
+author: "David Pershall"
+date: "11/14/2020"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This is a report on 2010 gun murder rates obtained from FBI reports. The original data was obtained from [this Wikipedia page](https://en.wikipedia.org/wiki/Murder_in_the_United_States_by_state).
+
+We are going to use the following libraries: 
+
+```{r loading-libs, message=FALSE}
+library(tidyverse)
+library(ggthemes)
+library(ggrepel)
+library(dplyr)
+library(ggplot2)
+```
+
+and load the data we already wrangled:
+
+```{r}
+load("rda/murders.rda")
+```
+
+## Murder rate by state per 100,000 in population.
+
+We note the large state to state variability by generating a barplot showing the murder rate by state:
+
+```{r murder-rate-by-state}
+murders %>% mutate(abb = reorder(abb, rate)) %>% 
+  ggplot(aes(abb, rate)) +
+  geom_bar(width = 0.5, stat = "identity", color = "black") +
+  coord_flip()
+```
+
+## US Gun Murders 2010 average rate per million.
+
+We compute the average murder rate per million in population. and graph all the pertinent information.
+
+```{r average-murder-rate-per-million}
+r <- murders %>% 
+  summarize(rate = sum(total) /  sum(population) * 10^6) %>%
+  pull(rate)
+r
+```
+
+## Visualize all the data
+
+A color coordinated graph of each state compared to the average rate in log scale.
+
+```{r log-scale-graph}
+murders %>% ggplot(aes(population/10^6, total, label = abb)) +
+  geom_abline(intercept = log10(r), lty = 2, color = "darkgrey") +
+  geom_point(aes(color=region), size = 3) +
+  geom_text_repel() + 
+  scale_x_log10() + 
+  scale_y_log10() + 
+  xlab("Population in millions (log scale)") +
+  ylab("Total number of murders") +
+  ggtitle("US Gun Murders in 2010") + 
+  scale_color_discrete(name = "Region") + 
+  theme_economist()
+```
+
