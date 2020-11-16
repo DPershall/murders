@@ -1,5 +1,5 @@
 ---
-title: "Quick Report on Gun Murders"
+title: "Quick Report on Gun Murders: an edited copy of the work by Rafael Irizarry"
 author: "David Pershall"
 date: "11/14/2020"
 output: pdf_document
@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-This is a quick report on 2010 gun murder rates obtained from FBI reports. The original data was obtained from [this Wikipedia page](https://en.wikipedia.org/wiki/Murder_in_the_United_States_by_state).
+This is a quick report on 2010 gun murder rates obtained from FBI reports. The original data was obtained from [this Wikipedia page](https://en.wikipedia.org/wiki/Murder_in_the_United_States_by_state). I have added a few things to the original project by Rafael Irizarry. This is part of my learning in the "Harvardx: Professional Certificate in Data Science" mooc.
 
 I am using the following R libraries: tidyverse, ggplot, ggrepel, ggthemes, & dplyr.
 
@@ -42,9 +42,9 @@ murders %>% mutate(abb = reorder(abb, rate)) %>%
 
 ## US Gun Murders 2010 average rate per million.
 
-We compute the average murder rate per million in population. and graph all the pertinent information.
+I compute the average murder rate per million in population.
 
-```{r average-murder-rate-per-million}
+```{r average-murder-rate-per-million, echo=FALSE}
 r <- murders %>% 
   summarize(rate = sum(total) /  sum(population) * 10^6) %>%
   pull(rate)
@@ -55,17 +55,7 @@ r
 
 A color coordinated graph of each state compared to the average gun murder rate in log scale.
 
-```{r log-scale-graph}
-murders %>% ggplot(aes(population/10^6, total, label = abb)) +
-  geom_abline(intercept = log10(r), lty = 2, color = "darkgrey") +
-  geom_point(aes(color=region), size = 3) +
-  geom_text_repel() + 
-  scale_x_log10() + 
-  scale_y_log10() + 
-  xlab("Population in millions (log scale)") +
-  ylab("Total number of murders") +
-  ggtitle("US Gun Murders in 2010") + 
-  scale_color_discrete(name = "Region") + 
-  theme_economist()
+```{r pressure, echo=FALSE, out.width='100%'}
+knitr::include_graphics("figs/USgunmurders2010.png")
 ```
 

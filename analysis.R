@@ -1,4 +1,8 @@
 library(tidyverse)
+library(ggthemes)
+library(ggrepel)
+library(dplyr)
+library(ggplot2)
 load("rda/murders.rda")
 
 murders %>% mutate(abb = reorder(abb, rate)) %>% 
