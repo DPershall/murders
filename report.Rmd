@@ -23,7 +23,7 @@ library(dplyr)
 library(ggplot2)
 ```
 
-I load the data that has already been wrangled in rda/murders.rda
+Load the data that has already been wrangled from rda/murders.rda
 
 ```{r, echo=FALSE}
 load("rda/murders.rda")
