@@ -1,8 +1,8 @@
 ---
-title: "Report on Gun Murders"
+title: "Quick Report on Gun Murders"
 author: "David Pershall"
 date: "11/14/2020"
-output: word_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -11,11 +11,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-This is a report on 2010 gun murder rates obtained from FBI reports. The original data was obtained from [this Wikipedia page](https://en.wikipedia.org/wiki/Murder_in_the_United_States_by_state).
+This is a quick report on 2010 gun murder rates obtained from FBI reports. The original data was obtained from [this Wikipedia page](https://en.wikipedia.org/wiki/Murder_in_the_United_States_by_state).
 
-We are going to use the following libraries: 
+I am using the following libraries: tidyverse, ggplot, ggrepel, ggthemes, & dplyr.
 
-```{r loading-libs, message=FALSE}
+```{r loading-libs, message=FALSE, echo=FALSE}
 library(tidyverse)
 library(ggthemes)
 library(ggrepel)
@@ -23,17 +23,17 @@ library(dplyr)
 library(ggplot2)
 ```
 
-and load the data we already wrangled:
+I load the data that has already been wrangled in rda/murders.rda
 
-```{r}
+```{r, echo=FALSE}
 load("rda/murders.rda")
 ```
 
 ## Murder rate by state per 100,000 in population.
 
-We note the large state to state variability by generating a barplot showing the murder rate by state:
+Note the large state to state variability by generating a barplot showing the gun murder rate by state:
 
-```{r murder-rate-by-state}
+```{r murder-rate-by-state, echo=FALSE}
 murders %>% mutate(abb = reorder(abb, rate)) %>% 
   ggplot(aes(abb, rate)) +
   geom_bar(width = 0.5, stat = "identity", color = "black") +
@@ -51,9 +51,9 @@ r <- murders %>%
 r
 ```
 
-## Visualize all the data
+## Visualize the data
 
-A color coordinated graph of each state compared to the average rate in log scale.
+A color coordinated graph of each state compared to the average gun murder rate in log scale.
 
 ```{r log-scale-graph}
 murders %>% ggplot(aes(population/10^6, total, label = abb)) +
